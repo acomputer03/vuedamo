@@ -29,11 +29,7 @@
                     </div>
                 </div>
 
-                <!-- <script>
-                    $(function () {
-                      $('#myList a:last-child').tab('show')
-                    })
-                </script> -->
+          
 
 
                 <div class="col-lg-9">

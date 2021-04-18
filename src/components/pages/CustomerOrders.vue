@@ -1,38 +1,75 @@
 <template>
     <div>
         <loading :active.sync="isLoading"></loading>
-        <div class="row mt-4">
-            <div class="col-lg-4 mb-4" v-for="item in products" :key="item.id">
-                <div class="card border-0 shadow-sm">
-                    <div style="height: 250px; background-size: cover; background-position: center center"
-                    :style="{backgroundImage:`url(${item.imageUrl}`}"
-                    >
+        <section>
+            <div class="container mt-5">
+                <div class="row">
+
+                    <!-- 使用ListGroup切換產品類別 -->
+                    <div class="col-lg-2 ">
+                        <div class="list-group text-center "  id="myList" role="tablist" >
+                            <div>
+                                <a  href="#" class="list-group-item list-group-item-action category h5" :class="{'active':category==='All'} " 
+                                    @click.prevent="changeCategory('All')">
+                                    全部商品
+                                </a>
+                            </div>
+                            <div v-for="(item, index) in filterCategory" :key="index">
+                                <a class="list-group-item list-group-item-action category h5" 
+                                    href="#"
+                                    :class="{'active':category===item}"
+                                    @click.prevent="changeCategory(item)">
+                                    {{ item }}
+                                </a>
+                            </div>
+                            
+                            
+                            
+                        </div>
                     </div>
-                    <div class="card-body">
-                    <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
-                    <h5 class="card-title">
-                        <a href="#" class="text-dark">{{item.title}}</a>
-                    </h5>
-                    <p class="card-text">{{item.content}}</p>
-                    <div class="d-flex justify-content-between align-items-baseline">
-                        <!-- <div class="h5">2,800 元</div> -->
-                        <del class="h6">原價 {{item.origin_price}} 元</del>
-                        <div class="h5">現在只要 {{item.price}} 元</div>
-                    </div>
-                    </div>
-                    <div class="card-footer d-flex">
-                    <button type="button" class="btn btn-outline-secondary btn-sm" @click="getproduct(item.id)">
-                        <i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i>
-                        查看更多
-                    </button>
-                    <button type="button" class="btn btn-outline-danger btn-sm ml-auto" @click="addCart(item.id)">
-                        <i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i>
-                        加到購物車
-                    </button>
+
+
+                    <div class="col-lg-10">
+                        <div class="row mt-4">
+                            <div class="col-lg-4 mb-4" v-for="item in filterProducts" :key="item.id">
+                                <div class="card border-0 shadow-sm">
+                                    <div style="height: 250px; background-size: cover; background-position: center center"
+                                    :style="{backgroundImage:`url(${item.imageUrl}`}"
+                                    >
+                                    </div>
+                                    <div class="card-body">
+                                    <span class="badge badge-secondary float-right ml-2">{{item.category}}</span>
+                                    <h5 class="card-title">
+                                        <a href="#" class="text-dark">{{item.title}}</a>
+                                    </h5>
+                                    <p class="card-text">{{item.content}}</p>
+                                    <div class="d-flex justify-content-between align-items-baseline">
+                                        <!-- <div class="h5">2,800 元</div> -->
+                                        <del class="h6">原價 {{item.origin_price}} 元</del>
+                                        <div class="h5">現在只要 {{item.price}} 元</div>
+                                    </div>
+                                    </div>
+                                    <div class="card-footer d-flex">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm" @click="getproduct(item.id)">
+                                        <i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i>
+                                        查看更多
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm ml-auto" @click="addCart(item.id)">
+                                        <i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i>
+                                        加到購物車
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        </section>
+
+
+        
 
         <div class="modal fade" id="productModal" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,7 +115,10 @@
 
 
         <!-- 將pagination元件化 -->
-        <pagination :pages="pagination" @emitPages="getProducts"></pagination>
+        <div class="row justify-content-center">
+            <pagination :pages="pagination" @emitPages="getProducts" v-if="category==='All'" class=""></pagination>
+        </div>
+        
 
         <br>
         <div class="container">
@@ -212,6 +252,7 @@ export default {
     data() {
         return {
             products:[],
+            productss:[],
             product:{},
             cart:{},
             pagination:{},
@@ -228,7 +269,10 @@ export default {
                     address:'',                    
                 },
                 message:'',
-            }
+            },
+            category: "All",
+            categoryItem: [],
+
         }
     },
     methods: {
@@ -240,8 +284,19 @@ export default {
                 vm.products = response.data.products;
                 vm.isLoading = false;
                 vm.pagination = response.data.pagination;
-                 console.log(vm.products)
+                //  console.log(vm.products)
             })
+        },
+        getProductss(){
+            const vm = this;
+            vm.isLoading = true;
+            const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/products/all`;
+            vm.$http.get(api).then(response => {
+                vm.productss = response.data.products;
+                
+                vm.isLoading = false;
+                
+            });
         },
         getproduct(id){
             const vm = this;
@@ -256,6 +311,11 @@ export default {
                 // console.log(response.data.product)
                 vm.status.loadingItem = '';                
             })
+        },
+        changeCategory(item) {
+            const vm = this;
+            // vm.keyPoint = "";
+            vm.category = item;
         },
         addCart(id ,qty=1){
             const vm = this;
@@ -306,7 +366,7 @@ export default {
                 code: vm.coupon_code,
             }
             this.$http.post(api,{data:coupon}).then((response) =>{
-                console.log(response)                
+                // console.log(response)                
                 vm.getCart();
                 vm.isLoading = false;                
                 
@@ -330,8 +390,31 @@ export default {
         }
 
     },
+    computed:{
+        filterCategory() {
+            const vm = this;
+            vm.productss.forEach(item => {
+                vm.categoryItem.push(item.category);
+            });
+            // console.log(vm.products)
+            return vm.categoryItem.filter(function(item, index, arr) {
+                return arr.indexOf(item) === index;
+            });
+        },
+        filterProducts() {
+            const vm = this;
+            if (vm.category === "All") {
+                return vm.products;
+            } else if (vm.category != "All") {
+                return vm.productss.filter(function(item) {
+                return item.category === vm.category;
+                });
+            }
+        },
+    },
     created() {
         this.getProducts();
+        this.getProductss();
         this.getCart();
     },
 }
