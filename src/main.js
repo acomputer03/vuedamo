@@ -68,8 +68,8 @@ router.beforeEach((to, from, next) => {
   if(to.meta.requiresAuth){
     const api =`${process.env.APIPATH}/api/user/check`;    
     axios.post(api).then((response) => {
-      // console.log(response.data)
-      // console.log('這裡需要認證' )
+      console.log(response.data)
+      console.log('這裡需要認證' )
       if(response.data.success){
         next();
       }else{

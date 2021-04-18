@@ -3,26 +3,26 @@
         <loading :active.sync="isLoading"></loading>
         <div class="container ec-container mt-3">
             <div class="row justify-content-center">
-                <div class="col-lg-10">
+                <div class="col-md-10">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent pl-0">
                             <li class="breadcrumb-item h5"><router-link to="/" class="text-brown">Home</router-link ></li>
                             <li class="breadcrumb-item h5"><router-link to="/products" class="text-brown">全部商品</router-link></li>
-                            <li class="breadcrumb-item active h5" aria-current="page">{{ product.title }}</li>
+                            <li class="breadcrumb-item active h5" aria-current="page" >{{ product.title }}</li>
                         </ol>
                     </nav>
                     <div class="row mb-5">
-                        <div class="col-lg-6">
+                        <div class="col-md-6">
                             <div >
                                 <img :src="product.imageUrl"  alt="" style="
                                     height: 400px;
-                                    width:400px;
+                                     width:100%;                                     
                                     background-size: cover;
                                     background-position: center center;
-                                ">                                
+                                " class="img-fluid">                                
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-md-6">
                              <h2 class="font-weight-bold text-black">
                                 {{ product.title }}
                             </h2>
@@ -111,7 +111,7 @@ export default {
             const api = `${process.env.APIPATH}/api/${process.env.CUSTOMPATH}/product/${id}`;
              vm.isLoading = true;
             this.$http.get(api).then((response) =>{
-                console.log(response)
+                // console.log(response)
                 response.data.product.num = 1;
                 vm.product = response.data.product;
                 // vm.product.num =1;
@@ -136,7 +136,7 @@ export default {
                 vm.$bus.$emit("upDataCart");
                 // console.log(response.data)
                 vm.status.loadingItem = ''; 
-                vm.getCart();
+                // vm.getCart();
                 //  $('#productModal').modal('hide');               
             })
         },

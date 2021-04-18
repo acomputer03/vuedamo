@@ -22,56 +22,12 @@ import Coupon from '@/customerpages/Coupon'
 Vue.use(Router)
 
 export default new Router({
+  
   routes: [
     {//如果不是所定義的頁面那就會導入到login頁面，避免進入不存在的頁面
       path:'*',
       redirect:'/'
     },
-    //前台路由
-    {
-      path: '/',
-      component: Layout,
-      children:[
-        {
-          path: '/',
-          name: 'Home',
-          component: Home,          
-        },
-        {
-          path: 'products',
-          name: 'products',
-          component: IndexProducts,          
-        },
-        {
-          path: 'coupon',
-          name: 'coupon',
-          component: Coupon,          
-        },
-        {
-          path: 'product/:id',
-          name: 'product',
-          component: IndexProduct,          
-        },
-        {
-          path: 'cart',
-          name: 'cart',
-          component: Cart,          
-        },
-        {
-          path: 'order',
-          name: 'order',
-          component: IndexOrder,          
-        }, 
-        {
-          path: 'ordercheckout/:orderId',
-          name: 'ordercheckout',
-          component: OrderCheckout,          
-        },       
-        
-      ]      
-    },
-
-    
     
     //後台路由
     {
@@ -80,7 +36,7 @@ export default new Router({
       component: Login
     }, 
     {
-      path: '/admin',
+      path: '/adminbg',
       name: 'Dashboard',
       component: Dashboard,
       meta:{requiresAuth:true},//需要被驗證
@@ -117,5 +73,53 @@ export default new Router({
         },
       ]
     },
+    
+    //前台路由
+    {
+      path: '/',
+      component: Layout,
+      children:[
+        {
+          path: '/',
+          name: 'Home',
+          component: Home,          
+        },
+        {
+          path: 'sproducts',
+          name: 'sproducts',
+          component: IndexProducts,          
+        },
+        {
+          path: 'coupon',
+          name: 'coupon',
+          component: Coupon,          
+        },
+        {
+          path: 'product/:id',
+          name: 'product',
+          component: IndexProduct,          
+        },
+        {
+          path: 'cart',
+          name: 'cart',
+          component: Cart,          
+        },
+        {
+          path: 'order',
+          name: 'order',
+          component: IndexOrder,          
+        }, 
+        {
+          path: 'ordercheckout/:orderId',
+          name: 'ordercheckout',
+          component: OrderCheckout,          
+        },       
+        
+      ]      
+    },
+
+    
+    
+    
   ]
 })

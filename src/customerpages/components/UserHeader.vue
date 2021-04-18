@@ -3,7 +3,7 @@
     <loading :active.sync="isLoading"></loading>
     <nav class="navbar navbar-expand-lg bg-white ">
       <div class="container">
-        <h2 class="home-navbar-brand text-brown"><i class="fas fa-hand-holding-heart "></i> 小確幸</h2>  
+        <h2 class="home-navbar-brand text-brown"><i class="fas fa-hand-holding-heart "></i> 小確幸 Happiness</h2>  
         <button 
           class="navbar-toggler navbar-toggle-bar"
           type="button"
@@ -21,18 +21,16 @@
               <router-link class="nav-link header-navbtn text-center text-brown h5" to="/">Home</router-link>
             </li>            
             <li class="nav-item">
-              <router-link class="nav-link header-navbtn text-center text-brown h5" to="/products">全部商品</router-link>
+              <router-link class="nav-link header-navbtn text-center text-brown h5" to="/sproducts">全部商品</router-link>
             </li>            
             <li class="nav-item">
               <router-link class="nav-link header-navbtn text-center text-brown h5" to="/coupon">優惠券</router-link>
             </li>
-            <!-- <li class="nav-item">
-              <router-link class="nav-link header-navbtn text-center text-brown h5" to="/introduce">常見問題</router-link>
-            </li>             -->
+            
           </ul>
         </div>
-        <div class="dropdown ml-auto">
-            <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
+        <div class="dropdown ml-auto 	d-none d-lg-block " >
+            <button class="btn btn-sm btn-cart" :class="{'d-none': hidden}" data-toggle="dropdown" data-flip="false">
                 <i class="fas fa-shopping-cart text-color fa-2x"></i>
                 <!-- <span class="badge badge-pill badge-danger">12</span> -->
                 <span class="badge badge-pill badge-danger" v-if="cart.carts.length !== 0">{{cart.carts.length}}</span>
@@ -66,7 +64,7 @@
                       </div>
                       <router-link to="/cart" class="btn btn-brown btn-block"
                       v-if="cart.final_total!=0">結帳去</router-link>
-                      <router-link to="/products" class="btn btn-brown btn-block"
+                      <router-link to="/sproducts" class="btn btn-brown btn-block"
                       v-else>立刻去逛逛吧！</router-link>
                       
                 </div>
@@ -129,14 +127,34 @@ export default {
             
         })
     },
+    hideenCart() {
+      const vm = this;
+      if (vm.$route.name === "order" || vm.$route.name === "ordercheckout") {
+        vm.hidden = true;
+      } else {
+        vm.hidden = false;
+      }
+    },
     
   },
   created(){
       const vm = this;
       vm.getCart();
+      vm.hideenCart();
       vm.$bus.$on("upDataCart", () => {
       vm.getCart();
       });
+  },
+  watch: {
+    $route(route) {
+      // console.log(route.name)
+      const vm = this;
+      if (route.name === "order" || route.name === "ordercheckout") {
+        vm.hidden = true;
+      } else {
+        vm.hidden = false;
+      }
+    }
   }
 }
 </script>

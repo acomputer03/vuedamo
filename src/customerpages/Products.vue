@@ -7,16 +7,16 @@
             <div class="row">
                 
                 <!-- 使用ListGroup切換產品類別 -->
-                <div class="col-md-3 ">
+                <div class="col-lg-3 ">
                     <div class="list-group text-center "  id="myList" role="tablist" >
                         <div>
-                            <a  href="#" class="list-group-item list-group-item-action category h3" :class="{'active':category==='All'} " 
+                            <a  href="#" class="list-group-item list-group-item-action category h5" :class="{'active':category==='All'} " 
                                 @click.prevent="changeCategory('All')">
                                 全部商品
                             </a>
                         </div>
                         <div v-for="(item, index) in filterCategory" :key="index">
-                            <a class="list-group-item list-group-item-action category h3" 
+                            <a class="list-group-item list-group-item-action category h5" 
                                 href="#"
                                 :class="{'active':category===item}"
                                 @click.prevent="changeCategory(item)">
@@ -36,15 +36,15 @@
                 </script> -->
 
 
-                <div class="col-md-9">
+                <div class="col-lg-9">
                     <div class="tab-content">
                         <div class="tab-pane active" id="pane-1">
                             <div class="row">
-                                <div class="col-md-4 mb-4" v-for="(item) in filterProducts" :key="item.id">
-                                    <div class="card box-shadow text-center h-100">
-                                        <div class="pic">
+                                <div class="col-lg-4 mb-4" v-for="(item) in filterProducts" :key="item.id">
+                                    <div class="card box-shadow text-center h-100 ">
+                                        <div class="pic ">
                                             <div style="height: 250px; background-size: cover; background-position: center center"
-                                            :style="{backgroundImage:`url(${item.imageUrl}`}" class="pic-enlarge">
+                                            :style="{backgroundImage:`url(${item.imageUrl}`}" class="pic-enlarge img-fluid">
                                             </div>
                                         </div>
                                        
@@ -63,10 +63,11 @@
                                                 查看更多
                                             </button> -->
                                             <router-link class="btn btn-outline-secondary btn-sm" :to="`/product/${ item.id }`">see more</router-link>
-                                            <button type="button" class="btn btn-brown btn-sm ml-auto" @click="addCart(item.id)">
-                                                <i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i>
+                                            <!-- <button type="button" class="btn btn-brown btn-sm ml-auto" @click="addCart(item.id)">
+                                                <i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i><i class="fas fa-shopping-cart"></i>
                                                 加到購物車
-                                            </button>
+                                            </button> -->
+                                            <a class="btn text-danger ml-auto" @click="addCart(item.id)"><i class="fas fa-spinner fa-spin" v-if="status.loadingItem ===item.id"></i><i class="fas fa-shopping-cart fa-lg"></i></a>
                                         </div>
                                     </div>
                                 </div>                                
@@ -115,7 +116,7 @@ export default {
                 //     });
                 // });
                 vm.isLoading = false;
-                console.log(vm.products )
+                // console.log(vm.products )
             });
         },
         changeCategory(item) {
@@ -171,6 +172,11 @@ export default {
     },
     created() {
         const vm = this;
+
+        if (vm.$route.params.category) {
+        vm.category = vm.$route.params.category;
+        }
+
         vm.getProducts();
         
     },

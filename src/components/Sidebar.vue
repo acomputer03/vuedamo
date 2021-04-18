@@ -11,19 +11,19 @@
                     </h6>
                     <ul class="nav flex-column">                    
                         <li class="nav-item">                                              
-                            <router-link to="/admin/products" class="nav-link">
+                            <router-link to="/adminbg/products" class="nav-link">
                                 <i class="fas fa-box-open "></i>
                                 產品列表
                             </router-link>
                         </li>
                         <li class="nav-item">                            
-                            <router-link to="/admin/orders"  class="nav-link">
+                            <router-link to="/adminbg/orders"  class="nav-link">
                                 <i class="far fa-list-alt "></i>
                                 訂單列表
                             </router-link>
                         </li>
                         <li class="nav-item">                           
-                            <router-link to="/admin/coupons"  class="nav-link">
+                            <router-link to="/adminbg/coupons"  class="nav-link">
                                 <i class="fas fa-ticket-alt "></i>
                                 優惠券
                             </router-link>
@@ -38,7 +38,7 @@
                     </h6>
                     <ul class="nav flex-column mb-2">
                         <li class="nav-item">                            
-                            <router-link to="/admin/customerorders"  class="nav-link">
+                            <router-link to="/adminbg/customerorders"  class="nav-link">
                                 <i class="fas fa-shopping-cart"></i>
                                 模擬訂單
                             </router-link>

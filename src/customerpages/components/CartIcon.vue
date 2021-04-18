@@ -122,7 +122,7 @@ export default {
       const vm = this;
       $("#CartModal").modal("hide");
       vm.$bus.$emit("goAllProducts", "All");
-      vm.$router.push(`/products`);
+      vm.$router.push(`/sproducts`);
     },
     goCart() {
       const vm = this;
@@ -134,7 +134,7 @@ export default {
     // },
     hideenCart() {
       const vm = this;
-      if (vm.$route.name === "Order" || vm.$route.name === "CheckOut") {
+      if (vm.$route.name === "order" || vm.$route.name === "ordercheckout") {
         vm.hidden = true;
       } else {
         vm.hidden = false;
@@ -148,18 +148,13 @@ export default {
     vm.$bus.$on("upDataCart", () => {
       vm.getCart();
     });
-    $(window).scroll(function() {
-      if ($(this).scrollTop() > 400) {
-        $(".gotop").fadeIn();
-      } else {
-        $(".gotop").fadeOut();
-      }
-    });
+    
   },
   watch: {
     $route(route) {
+      // console.log(route.name)
       const vm = this;
-      if (route.name === "Order" || route.name === "CheckOut") {
+      if (route.name === "order" || route.name === "ordercheckout") {
         vm.hidden = true;
       } else {
         vm.hidden = false;

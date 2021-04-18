@@ -1,18 +1,23 @@
 <template>
-  <div>
+  <div class="login">
     <form class="form-signin" @submit.prevent="signin">
-        <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
+        <h1 class="h3 mb-3 font-weight-normal text-center">請先登入</h1>
         <label for="inputEmail" class="sr-only" >信箱</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" v-model="user.username" required autofocus>
         <label for="inputPassword" class="sr-only">密碼</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" v-model="user.password" required>
-        <div class="checkbox mb-3">
-            <label>
-            <input type="checkbox" value="remember-me"> 記住我
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+        
+        <button class="btn btn-lg btn-brown btn-block" type="submit">登入</button>
+         <router-link to="/" class="text-dark ">
+         <div class="text-center mt-3">
+           回到首頁
+           <span class="ml-3">
+            <i class="fas fa-arrow-alt-circle-right"></i>
+          </span>
+         </div>
+          
+    </router-link>
+        <p class="mt-5 mb-3 text-muted text-center">&copy; 2021</p>
     </form>
   </div>
 </template>
@@ -40,7 +45,7 @@ export default {
                 const expired = response.data.expired;
                 // console.log(token, expired)
                 document.cookie = `yiruToken=${token};expires=${new Date(expired)};`;
-                 vm.$router.push('/admin/products')
+                 vm.$router.push('/adminbg/products')
             }
         })
     
@@ -95,4 +100,12 @@ export default {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     }
+    .login {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+  /* background-color: $dark; */
+}
 </style>

@@ -4,12 +4,12 @@
     <UserHeader></UserHeader>
     <router-view></router-view>
     <CartIcon></CartIcon>
-    <!-- <UserFooter></UserFooter> -->
+    <IndexFooter></IndexFooter>
   </div>
 </template>
 <script>
 import UserHeader from "@/customerpages/components/UserHeader";
-// import UserFooter from "@/components/User/UserFooter";
+import IndexFooter from "@/customerpages/components/IndexFooter";
  import CartIcon from "@/customerpages/components/CartIcon";
 // import Alert from "@/components/Alert";
 export default {
@@ -18,7 +18,7 @@ export default {
   },
   components: {
     UserHeader,
-    // UserFooter,
+     IndexFooter,
     CartIcon,
     // Alert
   }
